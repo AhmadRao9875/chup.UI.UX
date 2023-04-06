@@ -1,26 +1,32 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <scedualAppointment/>
+  <confirmedAppointment />
+  <appointmentSummary/>
+  <liveQueue />
+  <markArrival />
+  <arrivingSummary />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import scedualAppointment from './components/scedualAppointment.vue'
+import confirmedAppointment from './components/confirmedAppointment.vue'
+import appointmentSummary from './components/appointmentSummary.vue'
+import liveQueue from './components/liveQueue.vue'
+import markArrival from './components/markArrival.vue'
+import arrivingSummary from './components/arrivingSummary.vue'
+
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    scedualAppointment,
+    confirmedAppointment,
+    appointmentSummary,
+    liveQueue,
+    markArrival,
+    arrivingSummary,
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

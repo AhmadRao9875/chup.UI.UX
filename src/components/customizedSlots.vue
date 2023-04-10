@@ -344,7 +344,6 @@ select option:disabled {
   border: transparent;
   border-radius: 0.5rem;
   height: 3rem;
-
 }
 .title {
   padding-left: 0.5rem;
@@ -358,11 +357,10 @@ select option:disabled {
   max-width: 10rem;
   text-align: center;
   border-color: orangered;
-
 }
 
-.live-input::placeholder{
-    color: orangered;
+.live-input::placeholder {
+  color: orangered;
 }
 .clearall-sve-button {
   padding-top: 1rem;
@@ -381,11 +379,17 @@ select option:disabled {
   color: rgb(136, 135, 135);
   font-weight: bold;
   border: none;
-
 }
 .clearall-button {
   background-color: white;
   border-color: rgb(199, 196, 196);
   border-radius: 1rem;
+}
+
+/* media Query */
+@media only screen and (max-width: 600px) {
+  .customizedSlots-inner {
+    padding: 0;
+  }
 }
 </style>

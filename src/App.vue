@@ -1,8 +1,8 @@
 <template>
   <specificDay />
-  <!-- <customizedSlots />
+  <customizedSlots />
   <serviceFilters />
-  <movePosition /> -->
+  <movePosition />
   <!-- <scedualAppointment/>
   <confirmedAppointment />
   <appointmentSummary/>
@@ -13,9 +13,9 @@
 
 <script>
 import specificDay from './components/specificDay.vue';
-// import customizedSlots from './components/customizedSlots.vue';
-// import movePosition from './components/movePosition.vue';
-// import serviceFilters from './components/serviceFilters.vue';
+import customizedSlots from './components/customizedSlots.vue';
+import movePosition from './components/movePosition.vue';
+import serviceFilters from './components/serviceFilters.vue';
 
 // import scedualAppointment from './components/scedualAppointment.vue'
 // import confirmedAppointment from './components/confirmedAppointment.vue'
@@ -30,9 +30,9 @@ export default {
   name: 'App',
   components: {
     specificDay,
-    // customizedSlots,
-    // serviceFilters,
-    // movePosition,
+    customizedSlots,
+    serviceFilters,
+    movePosition,
 
     // scedualAppointment,
     // confirmedAppointment,

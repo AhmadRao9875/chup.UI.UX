@@ -92,11 +92,11 @@
             </button>
           </div>
           <div class="offButton">
-            <button class="onof-buttons toggle-btn">
+            <button class="onof-buttons off-toggle-button toggle-btn">
               <label class="toggle">
                 <input type="checkbox" />
                 <span class="slider round"></span> </label
-              >Off
+              >Off (Close All the Day)
             </button>
           </div>
         </div>
@@ -139,7 +139,13 @@
           </label>
         </div>
         <div class="selected-dates">
-          <div class="single-date">
+          <div
+            v-for="(date, index) in dates"
+            :key="date.index"
+            :date="date"
+            class="single-date"
+            @click="removeDate(date, index)"
+          >
             <svg
               class="cross-svg"
               xmlns="http://www.w3.org/2000/svg"
@@ -156,16 +162,117 @@
                 stroke-width="3"
               />
             </svg>
-            <div class="selected-date">12 Feb, 2023</div>
+            <div class="selected-date">{{ date.day1 }}</div>
           </div>
+          <addDate @add-new-date="addNewDate" @show-modal="showModal = false" />
         </div>
+      </div>
+      <hr />
+      <div class="date time">
+        <div class="date-title time-title"><h4>Times</h4></div>
+        <div class="selected-times">
+          <div class="single-time">
+            <div class="time-svg">
+              <img src="../assets/icons8-clock.svg" alt="" />
+            </div>
+            <div class="start-end-date">
+              <div class="start">
+                <select name="time" id="time">
+                  <option value="">1:00am</option>
+                  <option value="">2:00am</option>
+                  <option value="">3:00am</option>
+                  <option value="">4:00am</option>
+                  <option value="">5:00am</option>
+                  <option value="">6:00am</option>
+                  <option value="">7:00am</option>
+                  <option value="">8:00am</option>
+                  <option value="">9:00am</option>
+                  <option value="">10:00am</option>
+                  <option value="">11:00am</option>
+                  <option value="">12</option>
+                  <option value="">1:00pm</option>
+                  <option value="">2:00pm</option>
+                  <option value="">3:00pm</option>
+                  <option value="">4:00pm</option>
+                  <option value="">5:00pm</option>
+                  <option value="">6:00pm</option>
+                  <option value="">7:00pm</option>
+                  <option value="">8:00pm</option>
+                  <option value="">9:00pm</option>
+                  <option value="">10:00pm</option>
+                  <option value="">11:00pm</option>
+                </select>
+              </div>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                class="time-between-sign"
+              >
+                <rect x="2" y="8" width="10" height="1.5" fill="black" />
+              </svg>
+              <div class="end">
+                <select name="end-time" id="end-time">
+                  <option value="">1:00am</option>
+                  <option value="">2:00am</option>
+                  <option value="">3:00am</option>
+                  <option value="">4:00am</option>
+                  <option value="">5:00am</option>
+                  <option value="">6:00am</option>
+                  <option value="">7:00am</option>
+                  <option value="">8:00am</option>
+                  <option value="">9:00am</option>
+                  <option value="">10:00am</option>
+                  <option value="">11:00am</option>
+                  <option value="">12</option>
+                  <option value="">1:00pm</option>
+                  <option value="">2:00pm</option>
+                  <option value="">3:00pm</option>
+                  <option value="">4:00pm</option>
+                  <option value="">5:00pm</option>
+                  <option value="">6:00pm</option>
+                  <option value="">7:00pm</option>
+                  <option value="">8:00pm</option>
+                  <option value="">9:00pm</option>
+                  <option value="">10:00pm</option>
+                  <option value="">11:00pm</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="remove-svg">
+              <img src="../assets/icons8-minus-sign-24.png" alt="" />
+            </div>
+          </div>
+          <hr />
+          <button class="single-date add-date" @click="showModal = true">
+            <img src="../assets/icons8-calendar-orange.png" alt="" />
+            <div class="selected-date add-selected">Add Date</div>
+          </button>
+        </div>
+      </div>
+      <hr />
+      <div class="add-description">
+        <label for="input">Add Des (Optional)</label>
+        <textarea name="myTextArea" rows="4" cols="40"></textarea>
+      </div>
+      <hr />
+      <div class="save-clear-buttons">
+        <button class="save-button" @click="move">Save</button>
+        <button class="clear-button" @click="clear">Cear All</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import addDate from "../components/addDate.vue";
 export default {
+  components: {
+    addDate,
+  },
   name: "specificDay",
   data() {
     return {
@@ -174,11 +281,23 @@ export default {
       showOptions: false,
       showSVG: true,
       isOn: false,
+      selectedDate: "",
+      showModal: false,
       options: [
         { name: "John Doe", profilePic: "profile_pic_1.jpg" },
         { name: "Jane Smith", profilePic: "profile_pic_2.jpg" },
         { name: "Bob Johnson", profilePic: "profile_pic_3.jpg" },
         // Add more options here as needed
+      ],
+      dates: [
+        { day1: "12 feb, 2023" },
+        { day1: "13 feb, 2023" },
+        { day1: "14 feb, 2023" },
+        { day1: "15 feb, 2023" },
+        { day1: "16 feb, 2023" },
+        { day1: "17 feb, 2023" },
+        { day1: "18 feb, 2023" },
+        { day1: "19 feb, 2023" },
       ],
     };
   },
@@ -197,6 +316,24 @@ export default {
     },
     toggleSlider() {
       this.isOn = !this.isOn;
+    },
+    removeDate(dateToRemove) {
+      console.log("method is called");
+      const index = this.dates.indexOf(dateToRemove);
+      console.log("this is index", index);
+
+      if (index >= 0) {
+        this.dates.splice(index, 1);
+      }
+    },
+    addNewDate(selectedDate) {
+      this.showModal = false;
+      if (selectedDate) {
+        const newDateObj = { day1: selectedDate };
+        console.log(newDateObj);
+        this.dates.push(newDateObj);
+        this.selectedDate = "";
+      }
     },
   },
 };
@@ -317,6 +454,9 @@ hr.line-break {
   height: 2rem;
   border-radius: 0.2rem;
 }
+.off-toggle-button {
+  width: 12rem;
+}
 
 /* buttons */
 
@@ -410,6 +550,7 @@ input:checked + .slider:before {
   padding: 0;
 }
 .selected-dates {
+  width: 98%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -422,14 +563,149 @@ input:checked + .slider:before {
   border-radius: 0.2rem;
   display: flex;
   align-items: center;
+  margin-right: 0.3rem;
+  cursor: pointer;
+}
+
+.single-date:last-child {
+  margin-right: 0;
+}
+.add-date {
+  background-color: white;
+  border-color: orangered;
 }
 .cross-svg {
   position: absolute;
   top: 0;
   left: 90%;
 }
-.selected-date{
-    font-weight: bold;
-    padding-left: .2rem ;
+.selected-date {
+  font-weight: bold;
+  padding-left: 0.2rem;
+}
+.add-selected {
+  color: orangered;
+}
+.selected-times {
+  background-color: rgb(214, 218, 223);
+  width: 98%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.single-time {
+  width: 100%;
+  height: 2rem;
+  background-color: rgb(214, 218, 223);
+  border-radius: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 0.3rem;
+  cursor: pointer;
+}
+select {
+  border: none;
+  background: transparent;
+  font-weight: bold;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: none;
+}
+.time-svg {
+  width: 10%;
+  display: flex;
+  align-items: center;
+}
+.remove-svg {
+  width: 70%;
+  display: flex;
+  justify-content: flex-end;
+}
+.time-between-sign {
+  position: absolute;
+}
+
+.start-end-date {
+  display: flex;
+  width: 20%;
+  position: relative;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.add-description {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.save-clear-buttons {
+  display: flex;
+}
+.clear-button,
+.save-button {
+  width: 8rem;
+  height: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+}
+.save-button {
+  background-color: rgb(1, 60, 1);
+  color: white;
+  font-weight: bold;
+}
+.clear-button {
+  background-color: white;
+  border-color: rgb(199, 196, 196);
+  border-radius: 1rem;
+}
+
+/* Media Query  */
+
+@media only screen and (max-width: 600px) {
+  .specificDay-inner {
+    padding: 0;
+  }
+  .title-svg {
+    flex-direction: column-reverse;
+  }
+  .svg {
+    width: 100%;
+  }
+  .title-box {
+    width: 100%;
+  }
+  .check-values {
+    max-width: 100%;
+  }
+  .for-label {
+    margin: 0;
+    padding: 0;
+  }
+  .date {
+    width: 100%;
+  }
+  .date-radio-values {
+    max-width: 100%;
+  }
+  .selected-dates {
+    width: 100%;
+    margin: 0;
+  }
+  .single-date {
+    margin: 0;
+  }
+  .start-end-date {
+    width: 33%;
+  }
+  .remove-svg {
+    width: 33%;
+  }
+  .time-svg {
+    width: 33%;
+  }
 }
 </style>
